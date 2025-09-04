@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Завдання 6 і 7</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f4f8;
+    color: #333;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+  }
+
+  h3 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+    margin-top: 30px;
+  }
+
+  form {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+  ul {
+      text-align: center;
+      padding: 0;
+       background-color: #ffffff;
+      color: rgb(0, 119, 255);
+      border: none;
+      padding: 10px 18px;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+
+    li {
+      list-style: none;
+      margin-top: 10px;
+      
+    }
+
+  input[type="text"], select {
+    width: 95%;
+    padding: 8px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  input[type="button"] {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s, transform 0.1s;
+  }
+
+  input[type="button"]:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+  }
+
+  #total_sum, #total_sum_mod {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+  }
+</style>
+
+<script language="JavaScript"> 
+let product = ["Зошит", "Зарядка", "Зубна паста", "Завіса"];
+let quantity = [105, 50, 80, 20];
+let cost = [26, 250, 55, 120];
+
+let currentIndex = -1;
+
+function fun1() { 
+  let name = document.form1.name_cont.value.trim();
+  currentIndex = product.indexOf(name);
+
+  if (currentIndex !== -1) {
+    document.form1.output_density.value = "Кількість на складі: " + quantity[currentIndex];
+    document.form1.output_area.value = "Вартість за одиницю: " + cost[currentIndex] + " грн";
+  } else {
+    document.form1.output_density.value = "Товар не знайдено";
+    document.form1.output_area.value = "";
+    currentIndex = -1;
+  }
+}
+
+function fun2() { 
+  if (currentIndex !== -1) {
+    let total = quantity[currentIndex] * cost[currentIndex];
+    document.getElementById("total_sum").innerHTML = 
+      "Загальна сума вартості товару \"" + product[currentIndex] + "\": " + total + " грн";
+  } else {
+    document.getElementById("total_sum").innerHTML = 
+      "Спочатку знайдіть товар кнопкою «Наявна кількість і вартість».";
+  }
+}
+
+function fillSelect() {
+  let select = document.form2.product_select;
+  for (let i = 0; i < product.length; i++) {
+    let option = document.createElement("option");
+    option.value = i;
+    option.text = product[i];
+    select.add(option);
+  }
+}
+
+function fun1_mod() { 
+  currentIndex = parseInt(document.form2.product_select.value);
+
+  document.form2.output_quantity.value = "Кількість на складі: " + quantity[currentIndex];
+  document.form2.output_cost.value = "Вартість за одиницю: " + cost[currentIndex] + " грн";
+}
+
+function fun2_mod() { 
+  if (currentIndex !== -1) {
+    let total = quantity[currentIndex] * cost[currentIndex];
+    document.getElementById("total_sum_mod").innerHTML = 
+      "Загальна сума вартості товару \"" + product[currentIndex] + "\": " + total + " грн";
+  } else {
+    document.getElementById("total_sum_mod").innerHTML = 
+      "Будь ласка, оберіть товар зі списку.";
+  }
+}
+</script> 
+</head>
+
+<body onload="fillSelect()"> 
+  <div class="container">
+    <h1>Лабораторні роботи 6-7</h1>
+
+    <h3>Завдання 6</h3>
+    <FORM NAME="form1"> 
+      Введіть назву товару:<br>
+      <INPUT TYPE="text" NAME="name_cont"><br><br>
+
+      <INPUT TYPE="button" VALUE="Наявна кількість і вартість" onClick="fun1()"><br><br>
+
+      <INPUT TYPE="text" SIZE="70" NAME="output_density" readonly><br><br>
+      <INPUT TYPE="text" SIZE="70" NAME="output_area" readonly><br><br>
+
+      <INPUT TYPE="button" VALUE="Загальна сума" onClick="fun2()"><br><br>
+    </FORM> 
+
+    <div id="total_sum" style="color:darkblue;"></div>
+
+    <h3>Завдання 7 (модифікація з випадаючим списком)</h3>
+    <FORM NAME="form2"> 
+      Оберіть товар:<br>
+      <select name="product_select"></select><br><br>
+
+      <INPUT TYPE="button" VALUE="Наявна кількість і вартість" onClick="fun1_mod()"><br><br>
+
+      <INPUT TYPE="text" SIZE="70" NAME="output_quantity" readonly><br><br>
+      <INPUT TYPE="text" SIZE="70" NAME="output_cost" readonly><br><br>
+
+      <INPUT TYPE="button" VALUE="Загальна сума" onClick="fun2_mod()"><br><br>
+    </FORM> 
+
+    <div id="total_sum_mod" style="color:darkgreen;"></div>
+        <ul>
+      <li><a href="lab1.html">Назад</a></li>
+    </ul>
+  </div>
+</body> 
+</html>
